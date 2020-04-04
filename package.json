@@ -1,0 +1,48 @@
+{
+    "name": "datttaha",
+    "version": "1.0.0",
+    "description": "do an tt the anh hoang an",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "babel-node src/index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/buianh1998/DATTTAHA.git"
+    },
+    "author": "buianh1998",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/buianh1998/DATTTAHA/issues"
+    },
+    "homepage": "https://github.com/buianh1998/DATTTAHA#readme",
+    "dependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.7.0",
+        "bcryptjs": "^2.4.3",
+        "bluebird": "^3.5.3",
+        "body-parser": "^1.18.2",
+        "connect-flash": "^0.1.1",
+        "connect-mongo": "^2.0.1",
+        "cookie-parser": "^1.4.5",
+        "ejs": "^2.5.7",
+        "express": "^4.17.1",
+        "express-ejs-extend": "0.0.1",
+        "express-session": "^1.15.6",
+        "express-validator": "^4.3.0",
+        "fs-extra": "^7.0.1",
+        "lodash": "^4.17.11",
+        "mongoose": "^4.13.9",
+        "multer": "^1.4.1",
+        "nodemailer": "^4.4.2",
+        "passport": "^0.4.0",
+        "passport-facebook": "^2.1.1",
+        "passport-google-oauth2": "^0.2.0",
+        "passport-local": "^1.0.0",
+        "passport.socketio": "^3.7.0",
+        "pem": "^1.13.2",
+        "socket.io": "^2.3.0",
+        "uuid": "^3.3.2"
+    }
+}

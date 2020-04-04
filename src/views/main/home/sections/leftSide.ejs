@@ -1,0 +1,49 @@
+<div class="col-sm-3 sidenav no-padding">
+    <div class="left">
+        <div class="top form-group">
+            <select class="form-control" id="select-type-chat">
+                <option value="all-chat">Toàn bộ trò chuyện</option>
+                <option value="personal-chat">Trò chuyện cá nhân</option>
+                <option value="group-chat">Trò chuyện nhóm</option>
+            </select>
+            <a href="#groupChatModal" class="create-group-chat" data-toggle="modal" title="Tạo một nhóm trò chuyện mới"></a>
+        </div>
+        <ul class="people no-padding-start">
+            <a href="#uidcontact._id" class="room-chat">
+                <li class="person" data-chat="contact._id">
+                    <div class="left-avatar">
+                        <div class="dot"></div>
+                        <img src="images/users/1584435905440-159baa8e-8164-4313-8d89-a2ff8ed070bb-angular.png" alt="" />
+                    </div>
+                    <span class="name">
+                        Hoàng An
+                    </span>
+                    <span class="time">Một phút trước</span>
+                    <span class="preview">Xin chào</span>
+                </li>
+            </a>
+            <a href="#uidgroupChatItem._id" class="room-chat">
+                <li class="person group-chat" data-chat="groupChatItem._id">
+                    <div class="left-avatar">
+                        <!-- <div class="dot"></div> -->
+                        <img src="images/users/group-avatar-trungquandev.png" alt="" />
+                    </div>
+                    <span class="name"> <span class="group-chat-name">Group:</span> DATH- Cô Thơ </span>
+                    <span class="time">Hai giờ trước</span>
+                    <span class="preview">Chào các em</span>
+                </li>
+            </a>
+            <a href="#" class="room-chat" id="null-contact">
+                <li class="person active" data-chat="person-default">
+                    <div class="left-avatar">
+                        <div class="dot online"></div>
+                        <img class="avatar-online" src="images/users/trungquandev_new-ava.png" alt="" />
+                    </div>
+                    <span class="name">Bùi Anh (admin)</span>
+                    <span class="time">Bây giờ</span>
+                    <span class="preview">Xin chào <strong>Thế ANh</strong>...</span>
+                </li>
+            </a>
+        </ul>
+    </div>
+</div>
