@@ -2,48 +2,110 @@
     <div class="left">
         <div class="top form-group">
             <select class="form-control" id="select-type-chat">
-                <option value="all-chat">Toàn bộ trò chuyện</option>
-                <option value="personal-chat">Trò chuyện cá nhân</option>
-                <option value="group-chat">Trò chuyện nhóm</option>
+                <option value="all-chat" data-target="#all-chat">Toàn bộ trò chuyện</option>
+                <option value="user-chat" data-target="#user-chat">Trò chuyện cá nhân</option>
+                <option value="group-chat" data-target="#group-chat">Trò chuyện nhóm</option>
             </select>
             <a href="#groupChatModal" class="create-group-chat" data-toggle="modal" title="Tạo một nhóm trò chuyện mới"></a>
         </div>
-        <ul class="people no-padding-start">
-            <a href="#uidcontact._id" class="room-chat">
-                <li class="person" data-chat="contact._id">
-                    <div class="left-avatar">
-                        <div class="dot"></div>
-                        <img src="images/users/1584435905440-159baa8e-8164-4313-8d89-a2ff8ed070bb-angular.png" alt="" />
-                    </div>
-                    <span class="name">
-                        Hoàng An
-                    </span>
-                    <span class="time">Một phút trước</span>
-                    <span class="preview">Xin chào</span>
-                </li>
-            </a>
-            <a href="#uidgroupChatItem._id" class="room-chat">
-                <li class="person group-chat" data-chat="groupChatItem._id">
-                    <div class="left-avatar">
-                        <!-- <div class="dot"></div> -->
-                        <img src="images/users/group-avatar-trungquandev.png" alt="" />
-                    </div>
-                    <span class="name"> <span class="group-chat-name">Group:</span> DATH- Cô Thơ </span>
-                    <span class="time">Hai giờ trước</span>
-                    <span class="preview">Chào các em</span>
-                </li>
-            </a>
-            <a href="#" class="room-chat" id="null-contact">
-                <li class="person active" data-chat="person-default">
-                    <div class="left-avatar">
-                        <div class="dot online"></div>
-                        <img class="avatar-online" src="images/users/trungquandev_new-ava.png" alt="" />
-                    </div>
-                    <span class="name">Bùi Anh (admin)</span>
-                    <span class="time">Bây giờ</span>
-                    <span class="preview">Xin chào <strong>Thế ANh</strong>...</span>
-                </li>
-            </a>
-        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="all-chat">
+                <ul class="people no-padding-start">
+                    <%allConversations.forEach(function(conversation){%> <%if(conversation.menbers){%>
+                    <a href="#uid_<%=conversation._id%>" class="room-chat">
+                        <li class="person group-chat" data-chat="<%=conversation._id%>">
+                            <div class="left-avatar">
+                                <!-- <div class="dot"></div> -->
+                                <img src="images/users/group-avatar-trungquandev.png" alt="" />
+                            </div>
+                            <span class="name"> <span class="group-chat-name">Group:</span> <%=conversation.name%> </span>
+                            <span class="time">Hai giờ trước fake</span>
+                            <span class="preview">Chào các emfake</span>
+                        </li>
+                    </a>
+                    <%}else{%>
+                    <a href="#uid_<%=conversation._id%>" class="room-chat">
+                        <li class="person" data-chat="<%=conversation._id%>">
+                            <div class="left-avatar">
+                                <div class="dot"></div>
+                                <img src="images/users/<%=conversation.avatar%>" alt="" />
+                            </div>
+                            <span class="name">
+                                <%=conversation.username%>
+                            </span>
+                            <span class="time">Một phút trước</span>
+                            <span class="preview">Xin chào</span>
+                        </li>
+                    </a>
+                    <%}%> <% })%>
+                </ul>
+                <hr />
+                <div class="read-more-all-chat">
+                    <a href="javascript:void(0)" id="link-read-more-contacts">
+                        <strong>Xem thêm 10 bạn bè</strong>
+                    </a>
+                </div>
+                <div class="read-more-contacts-loader">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="tab-pane" id="user-chat">
+                <ul class="people no-padding-start">
+                    <%userConversations.forEach(function(userConversation){%>
+                    <a href="#uid_<%=userConversation._id%>" class="room-chat">
+                        <li class="person" data-chat="<%=userConversation._id%>">
+                            <div class="left-avatar">
+                                <div class="dot"></div>
+                                <img src="images/users/<%=userConversation.avatar%>" alt="" />
+                            </div>
+                            <span class="name">
+                                <%=userConversation.username%>
+                            </span>
+                            <span class="time">Một phút trước</span>
+                            <span class="preview">Xin chào</span>
+                        </li>
+                    </a>
+                    <%})%>
+                </ul>
+                <hr />
+                <div class="read-more-user-chat">
+                    <a href="javascript:void(0)" id="link-read-more-contacts">
+                        <strong>Xem thêm 10 bạn bè</strong>
+                    </a>
+                </div>
+                <div class="read-more-contacts-loader">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="tab-pane" id="group-chat">
+                <ul class="people no-padding-start">
+                    <%groupConversations.forEach(function(groupConversation){%>
+                    <a href="#uid_<%=groupConversation._id%>" class="room-chat">
+                        <li class="person group-chat" data-chat="<%=groupConversation._id%>">
+                            <div class="left-avatar">
+                                <!-- <div class="dot"></div> -->
+                                <img src="images/users/group-avatar-trungquandev.png" alt="" />
+                            </div>
+                            <span class="name"> <span class="group-chat-name">Group:</span> <%=groupConversation.name%> </span>
+                            <span class="time">Hai giờ trước fake</span>
+                            <span class="preview">Chào các emfake</span>
+                        </li>
+                    </a>
+                    <%})%>
+                </ul>
+                <hr />
+                <div class="read-more-group-chat">
+                    <a href="javascript:void(0)" id="link-read-more-contacts">
+                        <strong>Xem thêm 10 bạn bè</strong>
+                    </a>
+                </div>
+                <div class="read-more-contacts-loader">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

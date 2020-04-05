@@ -9,7 +9,7 @@ function nineScrollLeft() {
         horizrailenabled: false,
         cursorcolor: "#ECECEC",
         cursorwidth: "7px",
-        scrollspeed: 50
+        scrollspeed: 50,
     });
 }
 
@@ -19,7 +19,7 @@ function nineScrollRight() {
         horizrailenabled: false,
         cursorcolor: "#ECECEC",
         cursorwidth: "7px",
-        scrollspeed: 50
+        scrollspeed: 50,
     });
     $(".right .chat").scrollTop($(".right .chat")[0].scrollHeight);
 }
@@ -36,12 +36,12 @@ function enableEmojioneArea(chatId) {
         search: false,
         shortnames: false,
         events: {
-            keyup: function(editor, event) {
+            keyup: function (editor, event) {
                 $(".write-chat").val(this.getText());
-            }
-        }
+            },
+        },
     });
-    $(".icon-chat").bind("click", function(event) {
+    $(".icon-chat").bind("click", function (event) {
         event.preventDefault();
         $(".emojionearea-button").click();
         $(".emojionearea-editor").focus();
@@ -58,29 +58,27 @@ function spinLoading() {
 
 function ajaxLoading() {
     $(document)
-        .ajaxStart(function() {
+        .ajaxStart(function () {
             spinLoading();
         })
-        .ajaxStop(function() {
+        .ajaxStop(function () {
             spinLoaded();
         });
 }
 
 function showModalContacts() {
-    $("#show-modal-contacts").click(function() {
-        $(this)
-            .find(".noti_contact_counter")
-            .fadeOut("slow");
+    $("#show-modal-contacts").click(function () {
+        $(this).find(".noti_contact_counter").fadeOut("slow");
     });
 }
 
 function configNotification() {
-    $("#noti_Button").click(function() {
+    $("#noti_Button").click(function () {
         $("#notifications").fadeToggle("fast", "linear");
         $(".noti_counter").fadeOut("slow");
         return false;
     });
-    $(".main-content").click(function() {
+    $(".main-content").click(function () {
         $("#notifications").fadeOut("fast", "linear");
     });
 }
@@ -95,47 +93,47 @@ function gridPhotos(layoutNumber) {
             rel: "withhearts-gallery",
             gutter: "2px",
             layout: layoutStr,
-            onComplete: function() {
+            onComplete: function () {
                 $(".all-images").css({
-                    visibility: "visible"
+                    visibility: "visible",
                 });
                 $(".all-images a").colorbox({
                     photo: true,
                     scalePhotos: true,
                     maxHeight: "90%",
-                    maxWidth: "90%"
+                    maxWidth: "90%",
                 });
-            }
+            },
         });
 }
 
-function showButtonGroupChat() {
-    $("#select-type-chat").bind("change", function() {
-        if ($(this).val() === "group-chat") {
-            $(".create-group-chat").show();
-            // Do something...
-        } else {
-            $(".create-group-chat").hide();
-        }
-    });
-}
+// function showButtonGroupChat() {
+//     $("#select-type-chat").bind("change", function () {
+//         if ($(this).val() === "group-chat") {
+//             $(".create-group-chat").show();
+//             // Do something...
+//         } else {
+//             $(".create-group-chat").hide();
+//         }
+//     });
+// }
 
 function addFriendsToGroup() {
     $("ul#group-chat-friends")
         .find("div.add-user")
-        .bind("click", function() {
+        .bind("click", function () {
             let uid = $(this).data("uid");
             $(this).remove();
             let html = $("ul#group-chat-friends")
                 .find("div[data-uid=" + uid + "]")
                 .html();
 
-            let promise = new Promise(function(resolve, reject) {
+            let promise = new Promise(function (resolve, reject) {
                 $("ul#friends-added").append(html);
                 $("#groupChatModal .list-user-added").show();
                 resolve(true);
             });
-            promise.then(function(success) {
+            promise.then(function (success) {
                 $("ul#group-chat-friends")
                     .find("div[data-uid=" + uid + "]")
                     .remove();
@@ -144,10 +142,10 @@ function addFriendsToGroup() {
 }
 
 function cancelCreateGroup() {
-    $("#cancel-group-chat").bind("click", function() {
+    $("#cancel-group-chat").bind("click", function () {
         $("#groupChatModal .list-user-added").hide();
         if ($("ul#friends-added>li").length) {
-            $("ul#friends-added>li").each(function(index) {
+            $("ul#friends-added>li").each(function (index) {
                 $(this).remove();
             });
         }
@@ -160,8 +158,19 @@ function flashMasterNotify() {
         alertify.notify(notify, "success", 7);
     }
 }
+function changeTypeChat() {
+    $("#select-type-chat").bind("change", function () {
+        let optionSelected = $("option:selected", this);
+        optionSelected.tab("show");
 
-$(document).ready(function() {
+        if ($(this).val() === "user-chat") {
+            $(".create-group-chat").hide();
+        } else {
+            $(".create-group-chat").show();
+        }
+    });
+}
+$(document).ready(function () {
     // Hide số thông báo trên đầu icon mở modal contact
     showModalContacts();
 
@@ -179,7 +188,7 @@ $(document).ready(function() {
     ajaxLoading();
 
     // Hiển thị button mở modal tạo nhóm trò chuyện
-    showButtonGroupChat();
+    // showButtonGroupChat();
 
     // Hiển thị hình ảnh grid slide trong modal tất cả ảnh, tham số truyền vào là số ảnh được hiển thị trên 1 hàng.
     // Tham số chỉ được phép trong khoảng từ 1 đến 5
@@ -193,4 +202,7 @@ $(document).ready(function() {
 
     // Flash message ở màn hình master
     flashMasterNotify();
+
+    // Thay đổi kiểu trò truyện
+    changeTypeChat();
 });

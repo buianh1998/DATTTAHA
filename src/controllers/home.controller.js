@@ -1,4 +1,4 @@
-import { notifycation, contact } from "./../services/index.service";
+import { notifycation, contact, message } from "./../services/index.service";
 module.exports.getHomeChat = async (req, res, next) => {
     let notifications = await notifycation.getNotifycations(req.user._id);
     //get amount notifications unread
@@ -14,6 +14,10 @@ module.exports.getHomeChat = async (req, res, next) => {
     let countAllcontacts = await contact.countAllcontacts(req.user._id);
     let countAllContactsSent = await contact.countAllContactsSent(req.user._id);
     let countAllContactsReceived = await contact.countAllContactsReceived(req.user._id);
+    let getAllConvensationItems = await message.getAllConvensationItems(req.user._id);
+    let allConversations = getAllConvensationItems.allConversations;
+    let userConversations = getAllConvensationItems.userConversations;
+    let groupConversations = getAllConvensationItems.groupConversations;
 
     return res.render("main/home/home", {
         errors: req.flash("errors"),
@@ -26,6 +30,9 @@ module.exports.getHomeChat = async (req, res, next) => {
         contactsReceived: contactsReceived,
         countAllcontacts: countAllcontacts,
         countAllContactsSent: countAllContactsSent,
-        countAllContactsReceived: countAllContactsReceived
+        countAllContactsReceived: countAllContactsReceived,
+        allConversations: allConversations,
+        userConversations: userConversations,
+        groupConversations: groupConversations,
     });
 };
