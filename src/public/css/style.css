@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400, 600);
+@import url(https://fonts.googleapis.com/css?family=Source + Sans + Pro:400, 600);
 *,
 *:before,
 *:after {
@@ -670,7 +670,7 @@ label:focus,
 }
 
 .left a.create-group-chat {
-    display: none;
+    display: block;
     float: left;
     width: 40px;
     height: 40px;
@@ -1274,7 +1274,10 @@ label:focus,
 .read-more-notif,
 .read-more-contacts,
 .read-more-contacts-sent,
-.read-more-contacts-received {
+.read-more-contacts-received,
+.read-more-group-chat,
+.read-more-user-chat,
+.read-more-all-chat {
     text-align: center !important;
 }
 .read-more-notif-loader {
@@ -1493,4 +1496,7 @@ label:focus,
 }
 .display-important {
     display: inline-block !important;
+}
+.tab-content > .active {
+    background-color: #ffffff;
 }
