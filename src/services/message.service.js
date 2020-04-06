@@ -14,11 +14,11 @@ let getAllConvensationItems = (currentUserId) => {
             let userConversationPromise = contacts.map(async (contact) => {
                 if (contact.contactId == currentUserId) {
                     let getUserContact = await userModel.getNormalUserDataById(contact.userId);
-                    getUserContact.createdAt = contact.createdAt;
+                    getUserContact.updatedAt = contact.updatedAt;
                     return getUserContact;
                 } else {
                     let getUserContact = await userModel.getNormalUserDataById(contact.contactId);
-                    getUserContact.createdAt = contact.createdAt;
+                    getUserContact.updatedAt = contact.updatedAt;
                     return getUserContact;
                 }
             });
@@ -27,7 +27,7 @@ let getAllConvensationItems = (currentUserId) => {
             //concat gộp 2 mảng thành 1 mảng
             let allConversations = userConversations.concat(groupConversations);
             allConversations = _.sortBy(allConversations, (item) => {
-                return -item.createdAt;
+                return -item.updatedAt;
             });
             console.log(allConversations);
 

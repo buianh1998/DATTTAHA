@@ -18,9 +18,14 @@
                                 <!-- <div class="dot"></div> -->
                                 <img src="images/users/group-avatar-trungquandev.png" alt="" />
                             </div>
-                            <span class="name"> <span class="group-chat-name">Group:</span> <%=conversation.name%> </span>
-                            <span class="time">Hai giờ trước fake</span>
-                            <span class="preview">Chào các emfake</span>
+                            <span class="name">
+                                <span class="group-chat-name">
+                                    <%if(conversation.name.length > 15){%> <%=conversation.name.substr(0,11)%><span>...</span>
+                                    <%}else{%> <%=conversation.name%> <%}%>
+                                </span>
+                            </span>
+                            <span class="time">Hai giờ trước </span>
+                            <span class="preview">Chào các em </span>
                         </li>
                     </a>
                     <%}else{%>
@@ -60,7 +65,8 @@
                                 <img src="images/users/<%=userConversation.avatar%>" alt="" />
                             </div>
                             <span class="name">
-                                <%=userConversation.username%>
+                                <%if(userConversation.username.length > 15){%> <%=userConversation.username.substr(0,11)%><span>...</span>
+                                <%}else{%> <%=userConversation.username%> <%}%>
                             </span>
                             <span class="time">Một phút trước</span>
                             <span class="preview">Xin chào</span>
@@ -88,9 +94,14 @@
                                 <!-- <div class="dot"></div> -->
                                 <img src="images/users/group-avatar-trungquandev.png" alt="" />
                             </div>
-                            <span class="name"> <span class="group-chat-name">Group:</span> <%=groupConversation.name%> </span>
-                            <span class="time">Hai giờ trước fake</span>
-                            <span class="preview">Chào các emfake</span>
+                            <span class="name">
+                                <span class="group-chat-name">
+                                    <%if(groupConversation.name.length > 15){%> <%=groupConversation.name.substr(0,11)%><span>...</span>
+                                    <%}else{%> <%=groupConversation.name%> <%}%>
+                                </span>
+                            </span>
+                            <span class="time">Hai giờ trước </span>
+                            <span class="preview">Chào các em</span>
                         </li>
                     </a>
                     <%})%>
