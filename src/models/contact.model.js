@@ -71,7 +71,7 @@ contactSchema.statics = {
             {
                 $and: [{ userId: contactId }, { contactId: userId }, { status: false }],
             },
-            { status: true }
+            { status: true, updatedAt: Date.now() }
         );
     },
     /**
@@ -83,7 +83,7 @@ contactSchema.statics = {
         return this.find({
             $and: [{ $or: [{ userId: userId }, { contactId: userId }] }, { status: true }],
         })
-            .sort({ createdAt: -1 })
+            .sort({ updatedAt: -1 })
             .limit(limit)
             .exec();
     },
@@ -122,7 +122,7 @@ contactSchema.statics = {
         return this.find({
             $and: [{ $or: [{ userId: userId }, { contactId: userId }] }, { status: true }],
         })
-            .sort({ createdAt: -1 })
+            .sort({ updatedAt: -1 })
             .skip(skip)
             .limit(limit)
             .exec();
