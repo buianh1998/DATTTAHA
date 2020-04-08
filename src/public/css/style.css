@@ -1066,6 +1066,12 @@ label:focus,
     float: left;
 }
 
+.right .bubble.me img.avatar-small {
+    margin-left: 20px;
+}
+.right .bubble.you img.avatar-small {
+    margin-right: 20px;
+}
 .right .bubble.me a {
     float: left;
     border-bottom: 1.5px solid #c8d6e5;
@@ -1499,4 +1505,8 @@ label:focus,
 }
 .tab-content > .active {
     background-color: #ffffff;
+}
+#screen-chat {
+    width: 100%;
+    height: 100%;
 }
