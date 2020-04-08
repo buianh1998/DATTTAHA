@@ -19,15 +19,15 @@ let storageAvatar = multer.diskStorage({
 
         let avatarName = `${Date.now()}-${uuidv4()}-${file.originalname}`;
         callback(null, avatarName);
-    }
+    },
 });
 let avatarUploadfile = multer({
     storage: storageAvatar,
-    limits: { fileSize: app.avatar_limit_size }
+    limits: { fileSize: app.avatar_limit_size },
 }).single("avatar");
 
 module.exports.updateAvarta = (req, res) => {
-    avatarUploadfile(req, res, async error => {
+    avatarUploadfile(req, res, async (error) => {
         if (error) {
             if (error.message) {
                 return res.status(500).send(transErr.avatar_size);
@@ -37,15 +37,16 @@ module.exports.updateAvarta = (req, res) => {
         try {
             let updateUserItem = {
                 avatar: req.file.filename,
-                updatedAt: Date.now()
+                updatedAt: Date.now(),
             };
             //Update user
             let userupdate = await user.updateUser(req.user._id, updateUserItem);
+            //not remove avarta the old phôto,
             //remove user
-            await fsExtra.remove(`${app.avatar_directory}/${userupdate.avatar}`);
+            //await fsExtra.remove(`${app.avatar_directory}/${userupdate.avatar}`);
             let result = {
                 message: tranSuccess.user_info_updated,
-                imageSrc: `/images/users/${req.file.filename}`
+                imageSrc: `/images/users/${req.file.filename}`,
             };
             return res.status(200).send(result);
         } catch (error) {
@@ -65,7 +66,7 @@ module.exports.updateInfo = async (req, res) => {
     let validationError = validationResult(req);
     if (!validationError.isEmpty()) {
         let errors = Object.values(validationError.mapped());
-        errors.forEach(item => {
+        errors.forEach((item) => {
             errorArr.push(item.msg);
         });
         return res.status(500).send(errorArr);
@@ -74,7 +75,7 @@ module.exports.updateInfo = async (req, res) => {
         let updateUserItem = req.body;
         await user.updateUser(req.user._id, updateUserItem);
         let result = {
-            message: tranSuccess.user_info_updated
+            message: tranSuccess.user_info_updated,
         };
         return res.status(200).send(result);
     } catch (error) {
@@ -92,7 +93,7 @@ module.exports.updatePassword = async (req, res) => {
     let validationError = validationResult(req);
     if (!validationError.isEmpty()) {
         let errors = Object.values(validationError.mapped());
-        errors.forEach(item => {
+        errors.forEach((item) => {
             errorArr.push(item.msg);
         });
         return res.status(500).send(errorArr);
@@ -101,7 +102,7 @@ module.exports.updatePassword = async (req, res) => {
         let updateUserItem = req.body;
         await user.updatePassword(req.user._id, updateUserItem);
         let result = {
-            message: tranSuccess.user_password_updated
+            message: tranSuccess.user_password_updated,
         };
         return res.status(200).send(result);
     } catch (error) {

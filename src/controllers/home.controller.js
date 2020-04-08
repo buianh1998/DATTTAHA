@@ -1,4 +1,5 @@
 import { notifycation, contact, message } from "./../services/index.service";
+import { bufferBase64 } from "./../helpers/client.heplers";
 module.exports.getHomeChat = async (req, res, next) => {
     let notifications = await notifycation.getNotifycations(req.user._id);
     //get amount notifications unread
@@ -18,7 +19,7 @@ module.exports.getHomeChat = async (req, res, next) => {
     let allConversations = getAllConvensationItems.allConversations;
     let userConversations = getAllConvensationItems.userConversations;
     let groupConversations = getAllConvensationItems.groupConversations;
-
+    let allConversationswithMessages = getAllConvensationItems.allConversationswithMessages;
     return res.render("main/home/home", {
         errors: req.flash("errors"),
         success: req.flash("success"),
@@ -34,5 +35,7 @@ module.exports.getHomeChat = async (req, res, next) => {
         allConversations: allConversations,
         userConversations: userConversations,
         groupConversations: groupConversations,
+        allConversationswithMessages: allConversationswithMessages,
+        bufferBase64: bufferBase64,
     });
 };
