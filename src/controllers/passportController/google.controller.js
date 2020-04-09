@@ -20,7 +20,7 @@ let initPassportGoogle = () => {
                 clientID: ggAppId, //id của ứng dụng face tạo trên kia
                 clientSecret: ggAppsecret, // mật khẩu ứng dụng face
                 callbackURL: ggCallbackUrl, // đường dẫn của localhost của  mình để kết nối ứng dụng
-                passReqToCallback: true
+                passReqToCallback: true,
             },
             //profile là các thông tin của account face
             async (req, accessToken, refreshToken, profile, done) => {
@@ -38,8 +38,8 @@ let initPassportGoogle = () => {
                         google: {
                             uid: profile.id,
                             token: accessToken,
-                            email: profile.emails[0].value
-                        }
+                            email: profile.emails[0].value,
+                        },
                     };
                     let newUserFB = await UserModel.createNewUser(newUserItem);
                     return done(null, newUserFB, req.flash("success", tranSuccess.loginSuccess(newUserFB.username)));
@@ -60,11 +60,11 @@ let initPassportGoogle = () => {
     // khi đã lưu được thì sẽ có thể lấy đc toàn bộ thông tin cảu user bằng id khi dùng deserializeUser
     passport.deserializeUser((id, done) => {
         // nếu chỉ find dữ liệu sài asysn await, còn lỗi kiểm soát lỗi sài promise then catch
-        UserModel.findById(id)
-            .then(user => {
+        UserModel.findUserByIdForSessionToUse(id)
+            .then((user) => {
                 return done(null, user);
             })
-            .catch(error => {
+            .catch((error) => {
                 return done(error, null);
             });
     });

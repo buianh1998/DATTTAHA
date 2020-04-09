@@ -13,7 +13,7 @@ let initPassportLocal = () => {
             {
                 usernameField: "email",
                 passwordField: "password",
-                passReqToCallback: true
+                passReqToCallback: true,
             },
             async (req, email, password, done) => {
                 try {
@@ -44,11 +44,11 @@ let initPassportLocal = () => {
     // khi đã lưu được thì sẽ có thể lấy đc toàn bộ thông tin cảu user bằng id khi dùng deserializeUser
     passport.deserializeUser((id, done) => {
         // nếu chỉ find dữ liệu sài asysn await, còn lỗi kiểm soát lỗi sài promise then catch
-        UserModel.findById(id)
-            .then(user => {
+        UserModel.findUserByIdForSessionToUse(id)
+            .then((user) => {
                 return done(null, user);
             })
-            .catch(error => {
+            .catch((error) => {
                 return done(error, null);
             });
     });

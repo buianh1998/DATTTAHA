@@ -18,7 +18,7 @@ let updateUser = (id, item) => {
  */
 let updatePassword = (id, dataUpdate) => {
     return new Promise(async (reslove, reject) => {
-        let currentUser = await UserModel.findbyIdUser(id);
+        let currentUser = await UserModel.findUserByIdToUpdatePassword(id);
 
         if (!currentUser) return reject(transErr.account_undefined);
 
@@ -33,5 +33,5 @@ let updatePassword = (id, dataUpdate) => {
 };
 module.exports = {
     updateUser: updateUser,
-    updatePassword: updatePassword
+    updatePassword: updatePassword,
 };

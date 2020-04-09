@@ -20,6 +20,7 @@ module.exports.getHomeChat = async (req, res, next) => {
     let userConversations = getAllConvensationItems.userConversations;
     let groupConversations = getAllConvensationItems.groupConversations;
     let allConversationswithMessages = getAllConvensationItems.allConversationswithMessages;
+
     return res.render("main/home/home", {
         errors: req.flash("errors"),
         success: req.flash("success"),
