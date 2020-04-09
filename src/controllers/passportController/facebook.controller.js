@@ -21,7 +21,7 @@ let initPassportFacebook = () => {
                 clientSecret: fbAppsecret, // mật khẩu ứng dụng face
                 callbackURL: fbCallbackUrl, // đường dẫn của localhost của  mình để kết nối ứng dụng
                 passReqToCallback: true,
-                profileFields: ["email", "gender", "displayName"] // các trường muốn lấy trên face
+                profileFields: ["email", "gender", "displayName"], // các trường muốn lấy trên face
             },
             //profile là các thông tin của account face
             async (req, accessToken, refreshToken, profile, done) => {
@@ -39,8 +39,8 @@ let initPassportFacebook = () => {
                         facebook: {
                             uid: profile.id,
                             token: accessToken,
-                            email: typeof profile.emails != "undefined" ? profile.emails[0].value : "null"
-                        }
+                            email: typeof profile.emails != "undefined" ? profile.emails[0].value : "null",
+                        },
                     };
                     let newUserFB = await UserModel.createNewUser(newUserItem);
                     return done(null, newUserFB, req.flash("success", tranSuccess.loginSuccess(newUserFB.username)));
@@ -61,11 +61,11 @@ let initPassportFacebook = () => {
     // khi đã lưu được thì sẽ có thể lấy đc toàn bộ thông tin cảu user bằng id khi dùng deserializeUser
     passport.deserializeUser((id, done) => {
         // nếu chỉ find dữ liệu sài asysn await, còn lỗi kiểm soát lỗi sài promise then catch
-        UserModel.findById(id)
-            .then(user => {
+        UserModel.findUserByIdForSessionToUse(id)
+            .then((user) => {
                 return done(null, user);
             })
-            .catch(error => {
+            .catch((error) => {
                 return done(error, null);
             });
     });
