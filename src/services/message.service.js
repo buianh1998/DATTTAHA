@@ -34,9 +34,18 @@ let getAllConvensationItems = (currentUserId) => {
             });
             // get messages to apply in csreen chat
             let allConversationswithMessagesPromise = allConversations.map(async (conversation) => {
-                let getMessage = await messageGroupModel.model.getMessage(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
                 conversation = conversation.toObject();
-                conversation.messages = getMessage;
+                if (conversation.menbers) {
+                    let getMessage = await messageGroupModel.model.getMessageInGroup(conversation._id, LIMIT_MESSAGES_TAKEN);
+                    conversation.messages = getMessage;
+                } else {
+                    let getMessage = await messageGroupModel.model.getMessageInPersonal(
+                        currentUserId,
+                        conversation._id,
+                        LIMIT_MESSAGES_TAKEN
+                    );
+                    conversation.messages = getMessage;
+                }
                 return conversation;
             });
             let allConversationswithMessages = await Promise.all(allConversationswithMessagesPromise);
@@ -44,12 +53,8 @@ let getAllConvensationItems = (currentUserId) => {
             allConversationswithMessages = _.sortBy(allConversationswithMessages, (item) => {
                 return -item.updatedAt;
             });
-            console.log(allConversationswithMessages);
 
             resolve({
-                userConversations: userConversations,
-                groupConversations: groupConversations,
-                allConversations: allConversations,
                 allConversationswithMessages: allConversationswithMessages,
             });
         } catch (error) {
