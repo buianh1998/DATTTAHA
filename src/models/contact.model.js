@@ -145,5 +145,18 @@ contactSchema.statics = {
             .limit(limit)
             .exec();
     },
+    /**
+     * update contact (chat presonal) when contact
+     * @param {string} userId
+     * @param {string} contactId
+     */
+    updateWhenHasNewMessage(userId, contactId) {
+        return this.update(
+            {
+                $or: [{ $and: [{ userId: userId }, { contactId, contactId }] }, { $and: [{ contactId: userId }, { userId: contactId }] }],
+            },
+            { updatedAt: Date.now() }
+        ).exec();
+    },
 };
 module.exports = mongoose.model("contact", contactSchema);

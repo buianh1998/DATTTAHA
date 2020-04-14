@@ -30,27 +30,21 @@ let initPassportLocal = () => {
                     }
                     return done(null, user, req.flash("success", tranSuccess.loginSuccess(user.username)));
                 } catch (error) {
-                    console.log(err);
+                    console.log(error);
                     return done(null, false, req.flash("errors", transErr.server_error));
                 }
             }
         )
     );
     //save userId to session
-    passport.serializeUser((user, done) => {
-        done(null, user._id);
-    });
+    passport.serializeUser((user, done) => done(null, user._id));
     // lưu user id ở serializeUser
     // khi đã lưu được thì sẽ có thể lấy đc toàn bộ thông tin cảu user bằng id khi dùng deserializeUser
     passport.deserializeUser((id, done) => {
         // nếu chỉ find dữ liệu sài asysn await, còn lỗi kiểm soát lỗi sài promise then catch
         UserModel.findUserByIdForSessionToUse(id)
-            .then((user) => {
-                return done(null, user);
-            })
-            .catch((error) => {
-                return done(error, null);
-            });
+            .then((user) => done(null, user))
+            .catch((error) => done(error, null));
     });
 };
 module.exports = initPassportLocal;

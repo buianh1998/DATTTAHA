@@ -22,6 +22,13 @@ let messageSchema = new mongoose.Schema({
 });
 messageSchema.statics = {
     /**
+     * create new message
+     * @param {object} item
+     */
+    createNew(item) {
+        return this.create(item);
+    },
+    /**
      * get limited item one time
      * @param {string} senderId
      * @param {string} receiverId

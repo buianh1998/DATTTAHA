@@ -1,7 +1,6 @@
 import express from "express";
-import { auth, home, user, contact, notificaion } from "../controllers/index.controller";
-import { authValid, userValid, contactValid } from "./../validation/index";
-import password from "passport";
+import { auth, home, user, contact, notificaion, message } from "../controllers/index.controller";
+import { authValid, userValid, contactValid, messageValid } from "./../validation/index";
 import initPassportLocal from "../controllers/passportController/local.controller";
 import initPassportFacebook from "../controllers/passportController/facebook.controller";
 import initPassportGoogle from "../controllers/passportController/google.controller";
@@ -24,7 +23,7 @@ let initRouter = (app) => {
     router.post(
         "/login",
         auth.checkLoggedOut,
-        password.authenticate("local", {
+        passport.authenticate("local", {
             successRedirect: "/",
             failureRedirect: "/login-register",
             successFlash: true,
@@ -66,7 +65,7 @@ let initRouter = (app) => {
     router.get("/contact/read-more-contacts-reveived", auth.checkLoggedIn, contact.readMoreContactsReceiced);
     router.get("/notification/read-more", auth.checkLoggedIn, notificaion.readMore);
     router.put("/notification/mark-all-as-read", auth.checkLoggedIn, notificaion.markAllAsRead);
-
+    router.post("/message/add-new-text-emoji", auth.checkLoggedIn, messageValid.checkMessageLength, message.addNewTextImoji);
     return app.use("/", router);
 };
 module.exports = initRouter;
