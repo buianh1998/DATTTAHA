@@ -37,9 +37,11 @@ function enableEmojioneArea(divId) {
         shortnames: false,
         events: {
             keyup: function (editor, event) {
+                // gán giá trị thay đổi vào thẻ input đã bi ẩn
                 $(`#write-chat-${divId}`).val(this.getText());
             },
             click: function () {
+                //Bật lắng nghe dom cho việc chat văn bản + emoji
                 textAndEmojiChat(divId);
             },
         },
@@ -227,5 +229,5 @@ $(document).ready(function () {
     changeTypeChat();
     //Chuyển màn hình chat
     changeScreenChat();
-    $("ul.people").find("li")[0].click();
+    $("ul.people").find("a")[0].click();
 });

@@ -29,7 +29,6 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(connectFlash());
 //User Cookieparser
 app.use(cookieParser());
-
 //Confid passportjs
 app.use(passport.initialize()); //khởi tạo pasport
 app.use(passport.session()); // gọi sesion

@@ -16,8 +16,13 @@ function textAndEmojiChat(divId) {
                     dataTextEmoijiForSend.isChatGroup = true;
                 }
                 $.post("/message/add-new-text-emoji", dataTextEmoijiForSend, function (data) {
-                    ///success
-                }).fail(function (reponse) {});
+                    ///success4
+                    console.log(data.message);
+                }).fail(function (response) {
+                    console.log(response);
+
+                    alertify.notify(response.responseText, "error", 7);
+                });
             }
         });
 }
