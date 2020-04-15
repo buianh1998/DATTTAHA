@@ -38,14 +38,14 @@ let getAllConvensationItems = (currentUserId) => {
                 conversation = conversation.toObject();
                 if (conversation.menbers) {
                     let getMessage = await messageGroupModel.model.getMessageInGroup(conversation._id, LIMIT_MESSAGES_TAKEN);
-                    conversation.messages = getMessage;
+                    conversation.messages = _.reverse(getMessage);
                 } else {
                     let getMessage = await messageGroupModel.model.getMessageInPersonal(
                         currentUserId,
                         conversation._id,
                         LIMIT_MESSAGES_TAKEN
                     );
-                    conversation.messages = getMessage;
+                    conversation.messages = _.reverse(getMessage);
                 }
                 return conversation;
             });
