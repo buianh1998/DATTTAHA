@@ -41,11 +41,11 @@ messageSchema.statics = {
                 { $and: [{ senderId: receiverId }, { receiverId: senderId }] },
             ],
         })
-            .sort({ createdAt: 1 })
+            .sort({ createdAt: -1 })
             .limit(limit);
     },
     getMessageInGroup(receiverId, limit) {
-        return this.find({ receiverId: receiverId }).sort({ createdAt: 1 }).limit(limit);
+        return this.find({ receiverId: receiverId }).sort({ createdAt: -1 }).limit(limit);
     },
 };
 const MESSAGE_CONVERSATION_TYPES = {
