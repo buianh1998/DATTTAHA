@@ -24,11 +24,13 @@ let initRouter = (app) => {
         "/login",
         auth.checkLoggedOut,
         passport.authenticate("local", {
-            successRedirect: "/",
             failureRedirect: "/login-register",
             successFlash: true,
             failureFlash: true,
-        })
+        }),
+        function (req, res) {
+            res.redirect("/");
+        }
     );
     router.get("/auth/facebook", auth.checkLoggedOut, passport.authenticate("facebook", { scope: ["email"] }));
     router.get(

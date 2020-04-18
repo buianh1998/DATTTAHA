@@ -97,7 +97,7 @@ userSchema.statics = {
 //khi tìm ra bản ghi rồi sử dụng bản ghi đó gọi đến các phương thức trong methods
 userSchema.methods = {
     comparePassword(password) {
-        return bcrypt.compare(password, this.local.password); //return a promise has result is true or false
+        return bcrypt.compareSync(password, this.local.password); //return a promise has result is true or false
     },
 };
 module.exports = mongoose.model("users", userSchema);
