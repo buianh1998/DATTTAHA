@@ -55,6 +55,13 @@ function textAndEmojiChat(divId) {
                     $(`.person[data-chat=${divId}]`).trigger("chatOn.moveConversationToTheTop");
 
                     socket.emit("chat-text-emoji", dataToEmit);
+                    //Emit remove typing real-time
+                    typingOff(divId);
+                    // if this has typing, remove chat immediate
+                    let checkTyping = $(`.chat[data-chat = ${divId}]`).find("div.bubble-typing-gif");
+                    if (checkTyping.length) {
+                        checkTyping.remove();
+                    }
                 }).fail(function (response) {
                     alertify.notify(response.responseText, "error", 7);
                 });

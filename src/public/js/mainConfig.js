@@ -43,6 +43,10 @@ function enableEmojioneArea(divId) {
             click: function () {
                 //Bật lắng nghe dom cho việc chat văn bản + emoji
                 textAndEmojiChat(divId);
+                typingOn(divId);
+            },
+            blur: function () {
+                typingOff(divId);
             },
         },
     });
