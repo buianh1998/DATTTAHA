@@ -22,6 +22,8 @@ export const transErr = {
     avatar_size: "Hình ảnh dung lượng được quá 1MB",
     user_current_password_failed: "Mật khẩu hiện tại không chính xác",
     conversation_not_found: "cuộc trò truyện không tồn tại",
+    image_message_type: "Kiểu file hình ảnh không hợp lệ, chỉ chấp nhận png hoặc jpg",
+    image_message_size: "Hình ảnh dung lượng được quá 1MB",
 };
 export const tranSuccess = {
     userCeated: (userEmail) => {
