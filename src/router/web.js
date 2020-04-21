@@ -68,6 +68,8 @@ let initRouter = (app) => {
     router.get("/notification/read-more", auth.checkLoggedIn, notificaion.readMore);
     router.put("/notification/mark-all-as-read", auth.checkLoggedIn, notificaion.markAllAsRead);
     router.post("/message/add-new-text-emoji", auth.checkLoggedIn, messageValid.checkMessageLength, message.addNewTextImoji);
+    router.post("/message/add-new-image", auth.checkLoggedIn, message.addNewImage);
+
     return app.use("/", router);
 };
 module.exports = initRouter;
