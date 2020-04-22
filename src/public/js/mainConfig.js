@@ -98,6 +98,7 @@ function gridPhotos(layoutNumber) {
         .on("click", function () {
             let href = $(this).attr("href");
             let modalImageId = href.replace("#", "");
+            let originDataImage = $(`#${modalImageId}`).find("div.modal-body").html();
             let countRows = Math.ceil($(`#${modalImageId}`).find("div.all-images>img").length / layoutNumber);
             let layoutStr = new Array(countRows).fill(layoutNumber).join("");
             $(`#${modalImageId}`)
@@ -119,6 +120,10 @@ function gridPhotos(layoutNumber) {
                         });
                     },
                 });
+            //Bắt sự kiện đóng modal
+            $(`#${modalImageId}`).on("hidden.bs.modal", function () {
+                $(this).find("div.modal-body").html(originDataImage);
+            });
         });
 }
 

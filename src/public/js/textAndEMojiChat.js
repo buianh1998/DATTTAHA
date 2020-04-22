@@ -22,7 +22,7 @@ function textAndEmojiChat(divId) {
                         message: data.message,
                     };
                     let messageOfMe = $(`
-                    <div class="bubble me data-mess-id="${data.message._id}">
+                    <div class="bubble me" data-mess-id="${data.message._id}">
                     </div>
                     `);
                     messageOfMe.text(data.message.text);
@@ -74,10 +74,9 @@ $(document).ready(function () {
         console.log(response.currentGroupId);
         let divId = "";
         let messageOfYou = $(`
-        <div class="bubble you data-mess-id="${response.message._id}">
+        <div class="bubble you" data-mess-id="${response.message._id}">
         </div>
         `);
-        let dât;
         messageOfYou.text(response.message.text);
         let converEmojiMessage = messageOfYou.html();
         if (response.currentGroupId) {
