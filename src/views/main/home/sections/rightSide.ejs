@@ -5,7 +5,7 @@
             <div class="top">
                 <span>To: <span class="name"><%= conversation.name %></span></span>
                 <span class="chat-menu-right">
-                    <a href="#attachsModal_<%= conversation._id%>" class="show-attachs" data-toggle="modal">
+                    <a href="#attachmentsModal_<%= conversation._id%>" class="show-attachments" data-toggle="modal">
                         Tệp đính kèm
                         <i class="fa fa-paperclip"></i>
                     </a>
@@ -28,16 +28,15 @@
                         <i class="fa fa-users"></i>
                     </a>
                 </span>
-            </span>
-            <span class="chat-menu-right">
-                <a href="javascript:void(0)">&nbsp;</a>
-            </span>
-            <span class="chat-menu-right">
-                <a href="javascript: void(0)" class="number-message" data-toggle="modal">
-                    <span class="show-number-message"><%= conversation.messageAmount%></span>
-                    <i class="fa fa-comment"></i>
-                </a>
-            </span>
+                <span class="chat-menu-right">
+                    <a href="javascript:void(0)">&nbsp;</a>
+                </span>
+                <span class="chat-menu-right">
+                    <a href="javascript: void(0)" class="number-message" data-toggle="modal">
+                        <span class="show-number-message"><%= conversation.messageAmount%></span>
+                        <i class="fa fa-comment"></i>
+                    </a>
+                </span>
             </div>
             <div class="content-chat">
                 <div class="chat" data-chat="<%=conversation._id %>">
@@ -59,7 +58,7 @@
                     </div>
                     <%}%> <%if(message.messageType === "file"){%>
                     <div
-                        class="bubble <% if(message.senderId == user._id){%> me <%} else{%> you <%}%> bubble-image-file"
+                        class="bubble <% if(message.senderId == user._id){%> me <%} else{%> you <%}%> bubble-attachment-file"
                         data-mess-id="<%= message._id%>"
                     >
                         <a
@@ -83,11 +82,23 @@
                 <div class="icons">
                     <a href="#" class="icon-chat" data-chat="<%=conversation._id %>"><i class="fa fa-smile-o"></i></a>
                     <label for="image-chat-<%=conversation._id %>">
-                        <input type="file" id="image-chat-<%=conversation._id %>" name="my-image-chat" class="image-chat chat-in-group" data-chat="<%=conversation._id %>" />
+                        <input
+                            type="file"
+                            id="image-chat-<%=conversation._id %>"
+                            name="my-image-chat"
+                            class="image-chat chat-in-group"
+                            data-chat="<%=conversation._id %>"
+                        />
                         <i class="fa fa-photo"></i>
                     </label>
-                    <label for="attach-chat">
-                        <input type="file" id="attach-chat" name="my-attach-chat" class="attach-chat" data-chat="<%=conversation._id %>" />
+                    <label for="attachment-chat-<%=conversation._id %>">
+                        <input
+                            type="file"
+                            id="attachment-chat-<%=conversation._id %>"
+                            name="my-attachment-chat"
+                            class="attachment-chat chat-in-group"
+                            data-chat="<%=conversation._id %>"
+                        />
                         <i class="fa fa-paperclip"></i>
                     </label>
                     <a href="#streamModal" id="video-chat" class="video-chat" data-chat="<%=conversation._id %>" data-toggle="modal">
@@ -103,7 +114,7 @@
             <div class="top">
                 <span>To: <span class="name"><%= conversation.username %></span></span>
                 <span class="chat-menu-right">
-                    <a href="#attachsModal_<%= conversation._id%>" class="show-attachs" data-toggle="modal">
+                    <a href="#attachmentsModal_<%= conversation._id%>" class="show-attachments" data-toggle="modal">
                         Tệp đính kèm
                         <i class="fa fa-paperclip"></i>
                     </a>
@@ -136,7 +147,7 @@
                     </div>
                     <%}%> <%if(message.messageType === "file"){%>
                     <div
-                        class="bubble <% if(message.senderId == user._id){%> me <%} else{%> you <%}%> bubble-image-file"
+                        class="bubble <% if(message.senderId == user._id){%> me <%} else{%> you <%}%> bubble-attachment-file"
                         data-mess-id="<%= message._id%>"
                     >
                         <a
@@ -154,11 +165,23 @@
                 <div class="icons">
                     <a href="#" class="icon-chat" data-chat="<%=conversation._id %>"><i class="fa fa-smile-o"></i></a>
                     <label for="image-chat-<%=conversation._id %>">
-                        <input type="file" id="image-chat-<%=conversation._id %>" name="my-image-chat" class="image-chat" data-chat="<%=conversation._id %>" />
+                        <input
+                            type="file"
+                            id="image-chat-<%=conversation._id %>"
+                            name="my-image-chat"
+                            class="image-chat"
+                            data-chat="<%=conversation._id %>"
+                        />
                         <i class="fa fa-photo"></i>
                     </label>
-                    <label for="attach-chat">
-                        <input type="file" id="attach-chat" name="my-attach-chat" class="attach-chat" data-chat="<%=conversation._id %>" />
+                    <label for="attachment-chat-<%=conversation._id %>">
+                        <input
+                            type="file"
+                            id="attachment-chat-<%=conversation._id %>"
+                            name="my-attachment-chat"
+                            class="attachment-chat"
+                            data-chat="<%=conversation._id %>"
+                        />
                         <i class="fa fa-paperclip"></i>
                     </label>
                     <a href="#streamModal" id="video-chat" class="video-chat" data-chat="<%=conversation._id %>" data-toggle="modal">
