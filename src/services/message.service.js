@@ -202,8 +202,74 @@ let addNewImage = (sender, recieverId, messageVal, isChatGroup) => {
         }
     });
 };
+let addNewAttachment = (sender, recieverId, messageVal, isChatGroup) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (isChatGroup) {
+                let getChatGroupRecieved = await chatGroupModel.getChatGroupById(recieverId);
+                if (!getChatGroupRecieved) {
+                    return reject(transErr.conversation_not_found);
+                }
+                let reciever = {
+                    id: getChatGroupRecieved._id,
+                    name: getChatGroupRecieved.name,
+                    avatar: app.general_avatar_group_chat,
+                };
+                let attachmentBuffer = await fsExtra.readFile(messageVal.path);
+                let attachmentContentType = messageVal.mimetype;
+                let attachmentName = messageVal.originalname;
+                let newMessageItem = {
+                    senderId: sender.id,
+                    receiverId: reciever.id,
+                    conversationType: messageGroupModel.conversationTypes.GROUP,
+                    messageType: messageGroupModel.messageTypes.FILE,
+                    sender: sender,
+                    receiver: reciever,
+                    file: { data: attachmentBuffer, contentType: attachmentContentType, fileName: attachmentName },
+                    createdAt: Date.now(),
+                };
+                //create new message
+                let newMessage = await messageGroupModel.model.createNew(newMessageItem);
+                //update groub chat
+                await chatGroupModel.updateWhenHasNewMessage(getChatGroupRecieved._id, getChatGroupRecieved.messageAmount + 1);
+                resolve(newMessage);
+            } else {
+                let getUserRecieved = await userModel.getNormalUserDataById(recieverId);
+                if (!getUserRecieved) {
+                    return reject(transErr.conversation_not_found);
+                }
+                let reciever = {
+                    id: getUserRecieved._id,
+                    name: getUserRecieved.username,
+                    avatar: getUserRecieved.avatar,
+                };
+                let attachmentBuffer = await fsExtra.readFile(messageVal.path);
+                let attachmentContentType = messageVal.mimetype;
+                let attachmentName = messageVal.originalname;
+                let newMessageItem = {
+                    senderId: sender.id,
+                    receiverId: reciever.id,
+                    conversationType: messageGroupModel.conversationTypes.PESONAL,
+                    messageType: messageGroupModel.messageTypes.FILE,
+                    sender: sender,
+                    receiver: reciever,
+                    file: { data: attachmentBuffer, contentType: attachmentContentType, fileName: attachmentName },
+                    createdAt: Date.now(),
+                };
+                //create new message
+                let newMessage = await messageGroupModel.model.createNew(newMessageItem);
+                //update contact
+                await contactModel.updateWhenHasNewMessage(sender.id, getUserRecieved._id);
+                resolve(newMessage);
+            }
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
 module.exports = {
     getAllConvensationItems: getAllConvensationItems,
     addNewTextImoji: addNewTextImoji,
     addNewImage: addNewImage,
+    addNewAttachment: addNewAttachment,
 };

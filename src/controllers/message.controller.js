@@ -22,7 +22,7 @@ let storageImageChat = multer.diskStorage({
 });
 let imageMessageUploadfile = multer({
     storage: storageImageChat,
-    limits: { fileSize: app.image_message_limit_size },
+    limits: { fileSize: app.image_limit_size },
 }).single("my-image-chat");
 module.exports.addNewTextImoji = async (req, res) => {
     let errArr = [];
@@ -70,6 +70,50 @@ module.exports.addNewImage = async (req, res) => {
             let newMessage = await message.addNewImage(sender, recieverId, messageVal, isChatGroup);
             //remove image, because this image is saved to mongodb
             await fsExtra.remove(`${app.image_message_directory}/${newMessage.file.fileName}`);
+            return res.status(200).send({ message: newMessage });
+        } catch (error) {
+            console.log(error);
+            return res.status(500).send(error);
+        }
+    });
+};
+//Hanled attachment chat
+let storageAttachmentChat = multer.diskStorage({
+    // khai báo nơi lưu
+    destination: (req, file, callback) => {
+        callback(null, app.attachment_message_directory);
+    },
+    filename: (req, file, callback) => {
+        let attachmentName = file.originalname;
+        callback(null, attachmentName);
+    },
+});
+let attachmentMessageUploadfile = multer({
+    storage: storageAttachmentChat,
+    limits: { fileSize: app.attachment_limit_size },
+}).single("my-attachment-chat");
+module.exports.addNewAttachment = async (req, res) => {
+    attachmentMessageUploadfile(req, res, async (errorAttachment) => {
+        if (errorAttachment) {
+            if (errorImage.message) {
+                return res.status(500).send(transErr.file_message_size);
+            }
+            console.log(errorAttachment);
+
+            return res.status(500).send(errorAttachment);
+        }
+        try {
+            let sender = {
+                id: req.user._id,
+                name: req.user.username,
+                avatar: req.user.avatar,
+            };
+            let recieverId = req.body.uid;
+            let messageVal = req.file;
+            let isChatGroup = req.body.isChatGroup;
+            let newMessage = await message.addNewAttachment(sender, recieverId, messageVal, isChatGroup);
+            //remove attachemnt, because this attachemnt is saved to mongodb
+            await fsExtra.remove(`${app.attachment_message_directory}/${newMessage.file.fileName}`);
             return res.status(200).send({ message: newMessage });
         } catch (error) {
             console.log(error);
