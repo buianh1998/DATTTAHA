@@ -208,6 +208,8 @@ function changeScreenChat() {
             imageChat(divId);
             // Bật lắng nghe dom cho việc chat tệp file
             attachmentChat(divId);
+            // Bật video Chat
+            videoChat(divId);
         });
 }
 function bufferToBase64(buffer) {
@@ -247,4 +249,7 @@ $(document).ready(function () {
     //Chuyển màn hình chat
     changeScreenChat();
     $("ul.people").find("a")[0].click();
+    $("#video-chat-group").bind("click", function () {
+        alertify.notify("Không khả dụng tính năng này với nhóm trò chuyện, chỉ có thể sử dụng với trò truyện cá nhân", "error", 7);
+    });
 });
