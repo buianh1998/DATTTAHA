@@ -61,6 +61,7 @@ let initRouter = (app) => {
     router.delete("/contact/remove-request-contact-sent", auth.checkLoggedIn, contact.removeRequestContactSent);
     router.delete("/contact/remove-request-contact-recieved", auth.checkLoggedIn, contact.removeRequestContactRecieved);
     router.put("/contact/approve-request-contact-recieved", auth.checkLoggedIn, contact.approveRequestContactRecieved);
+    router.get("/contact/search-friends/:keyword", auth.checkLoggedIn, contactValid.searchFriend, contact.searchFriends);
 
     router.get("/contact/read-more-contacts", auth.checkLoggedIn, contact.readMoreContacts);
     router.get("/contact/read-more-contacts-sent", auth.checkLoggedIn, contact.readMoreContactsSent);
