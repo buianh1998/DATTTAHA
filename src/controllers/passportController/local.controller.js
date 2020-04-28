@@ -10,6 +10,21 @@ let localStrategy = passportLocal.Strategy;
  * Kiểu tra tk local
  */
 let initPassportLocal = () => {
+    //save userId to session
+    passport.serializeUser((user, done) => done(null, user._id));
+    // lưu user id ở serializeUser
+    // khi đã lưu được thì sẽ có thể lấy đc toàn bộ thông tin cảu user bằng id khi dùng deserializeUser
+    passport.deserializeUser(async (id, done) => {
+        try {
+            let user = await UserModel.findUserByIdForSessionToUse(id);
+            let getChatGroupIds = await chatGroupModel.getChatGroupIdsByUser(user._id);
+            user = user.toObject();
+            user.chatGroupIds = getChatGroupIds;
+            return done(null, user);
+        } catch (error) {
+            return done(error, null);
+        }
+    });
     passport.use(
         new localStrategy(
             {
@@ -39,20 +54,5 @@ let initPassportLocal = () => {
             }
         )
     );
-    //save userId to session
-    passport.serializeUser((user, done) => done(null, user._id));
-    // lưu user id ở serializeUser
-    // khi đã lưu được thì sẽ có thể lấy đc toàn bộ thông tin cảu user bằng id khi dùng deserializeUser
-    passport.deserializeUser(async (id, done) => {
-        try {
-            let user = await UserModel.findUserByIdForSessionToUse(id);
-            let getChatGroupIds = await chatGroupModel.getChatGroupIdsByUser(user._id);
-            user = user.toObject();
-            user.chatGroupIds = getChatGroupIds;
-            return done(null, user);
-        } catch (error) {
-            return done(error, null);
-        }
-    });
 };
 module.exports = initPassportLocal;
