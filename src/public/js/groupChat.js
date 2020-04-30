@@ -22,7 +22,7 @@ function addFriendsToGroup() {
 }
 
 function cancelCreateGroup() {
-    $("#cancel-group-chat").bind("click", function () {
+    $("#btn-cancel-group-chat").bind("click", function () {
         $("#groupChatModal .list-user-added").hide();
         if ($("ul#friends-added>li").length) {
             $("ul#friends-added>li").each(function (index) {
@@ -54,8 +54,55 @@ function callSearchFriends(element) {
         });
     }
 }
-function callCreateGroupChat() {}
+function callCreateGroupChat() {
+    $("#btn-create-group-chat")
+        .unbind("click")
+        .on("click", function () {
+            let countUsers = $("ul#friends-added").find("li");
+            if (countUsers.length < 2) {
+                alertify.notify("Vui lòng chọn thêm bạn bè vào nhóm, tối thiểu 2 người", "error", 7);
+                return false;
+            }
+            let groupChatNames = $("#input-name-group-chat").val();
+            if (groupChatNames.length < 5 || groupChatNames.length > 30) {
+                alertify.notify("Vui lòng nhập tên cuộc trò truyện giới hạn 5 tới 30 ký tự, tối thiểu 2 người", "error", 7);
+                return false;
+            }
+            let arrayIds = [];
+            $("ul#friends-added")
+                .find("li")
+                .each(function (index, item) {
+                    arrayIds.push({ userId: $(item).data("uid") });
+                });
+            Swal.fire({
+                title: `Bạn có chắc chắn muốn tạo nhóm &nbsp;${groupChatNames}?`,
+                icon: "Info",
+                showCancelButton: true,
+                confirmButtonColor: "#2ECC71",
+                cancelButtonColor: "#ff7675",
+                confirmButtonText: "Xác nhận",
+                cancelButtonText: "Hủy",
+            }).then((result) => {
+                if (!result.value) {
+                    return false;
+                }
+                $.post(
+                    "/group-chat/add-new",
+                    {
+                        arrayIds: arrayIds,
+                        groupChatNames: groupChatNames,
+                    },
+                    function (data) {
+                        console.log(data.groupChat);
+                    }
+                ).fail(function (response) {
+                    alertify.notify(response.responseText, "error", 7);
+                });
+            });
+        });
+}
 $(document).ready(function () {
     $("#input-search-friends-to-add-group-chat").bind("keypress", callSearchFriends);
     $("#btn-search-friends-to-add-group-chat").bind("click", callFindUser);
+    callCreateGroupChat();
 });
