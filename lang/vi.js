@@ -9,6 +9,8 @@ export const transValidation = {
     update_phone: "Số điện thoại Việt Nam bắt đầu bằng số 0, giới hạn từ 10 tới 11 ký tự",
     keyword_find_user: "Chỉ cho phép nhập chữ cái và số, và khoảng trống không được nhập ký tự.",
     message_text_emoji_incorrect: "Tin nhắn không hợp lệ. Ít nhất là 1 ký tự, tối đa 400 ký tự",
+    add_new_group_users_incorrect: "Vui lòng chọn bạn bè vào nhóm, tối thiểu 2 người",
+    add_new_group_name_incorrect: "Vui lòng nhập tên cuộc trò chuyện, giới hạn từ 5 tới 30 ký tự.",
 };
 export const transErr = {
     account_in_user: "Email đã tồn tại hãy sử dụng email khác",

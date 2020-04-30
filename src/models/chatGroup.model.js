@@ -10,6 +10,9 @@ let ChatGroupSchema = new mongoose.Schema({
     deletedAt: { type: Number, default: null },
 });
 ChatGroupSchema.statics = {
+    createNew(item) {
+        return this.create(item);
+    },
     /**
      * get Data Chatgroup Item find UserId
      * @param {string} userId
