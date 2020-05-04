@@ -11,14 +11,14 @@ let sendMail = (to, subject, htmlContent) => {
         secure: false,
         auth: {
             user: adminEmail,
-            pass: adminPassword
-        }
+            pass: adminPassword,
+        },
     });
     let options = {
         from: adminEmail,
         to: to,
         subject: subject,
-        html: htmlContent
+        html: htmlContent,
     };
     return transporter.sendMail(options); //this default return promise
 };

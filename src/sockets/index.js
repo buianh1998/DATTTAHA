@@ -10,6 +10,7 @@ import chatImage from "./chat/chatImage";
 import chatAttachment from "./chat/chatAttachment";
 import chatVideo from "./chat/chatVideo";
 import userOnlineOffline from "./status/userOnlineOffline";
+import newGroupChat from "./group/newGroupChat";
 /**
  * @param io form socket.io
  */
@@ -26,5 +27,6 @@ let initSocket = (io) => {
     chatAttachment(io);
     chatVideo(io);
     userOnlineOffline(io);
+    newGroupChat(io);
 };
 module.exports = initSocket;
