@@ -4,6 +4,11 @@ import multer from "multer";
 import { app } from "../Config/app";
 import { transErr, tranSuccess } from "../../lang/vi";
 import fsExtra from "fs-extra";
+import ejs from "ejs";
+import { lastItemOfArray, convertTimestampToHumanTime, bufferBase64 } from "./../helpers/client.heplers";
+import { promisify } from "util";
+// Make render file ejs function available asysn await
+const renderFile = promisify(ejs.renderFile).bind(ejs);
 
 let storageImageChat = multer.diskStorage({
     // khai báo nơi lưu
@@ -120,4 +125,58 @@ module.exports.addNewAttachment = async (req, res) => {
             return res.status(500).send(error);
         }
     });
+};
+module.exports.readMoreAllChat = async (req, res) => {
+    try {
+        //get skip Number from query param
+        let skipPersonnal = +req.query.skipPersonnal;
+        let skipGroup = +req.query.skipGroup;
+        let newAllConversations = await message.readMoreAllChat(req.user._id, skipPersonnal, skipGroup);
+        let dataToRender = {
+            newAllConversations: newAllConversations,
+            lastItemOfArray: lastItemOfArray,
+            convertTimestampToHumanTime: convertTimestampToHumanTime,
+            bufferBase64: bufferBase64,
+            user: req.user,
+        };
+        //get more Item
+        let leftSideData = await renderFile("src/views/main/readMoreConversation/_leftSide.ejs", dataToRender);
+        let rightSideData = await renderFile("src/views/main/readMoreConversation/_rightSide.ejs", dataToRender);
+        let imageModalData = await renderFile("src/views/main/readMoreConversation/_imageModal.ejs", dataToRender);
+        let actachmentModalData = await renderFile("src/views/main/readMoreConversation/_actachmentModal.ejs", dataToRender);
+        return res.status(200).send({
+            leftSideData: leftSideData,
+            rightSideData: rightSideData,
+            imageModalData: imageModalData,
+            actachmentModalData: actachmentModalData,
+        });
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+};
+module.exports.readMore = async (req, res) => {
+    try {
+        //get skip Number from query param
+        let skipMessage = +req.query.skipMessage;
+        let targetid = req.query.targetId;
+        let chatInGroup = req.query.chatInGroup === "true";
+
+        let newMessages = await message.readMore(req.user._id, skipMessage, targetid, chatInGroup);
+        let dataToRender = {
+            newMessages: newMessages,
+            bufferBase64: bufferBase64,
+            user: req.user,
+        };
+        //get more Item
+        let rightSideData = await renderFile("src/views/main/readMoreMessages/_rightSide.ejs", dataToRender);
+        let imageModalData = await renderFile("src/views/main/readMoreMessages/_imageModal.ejs", dataToRender);
+        let actachmentModalData = await renderFile("src/views/main/readMoreMessages/_actachmentModal.ejs", dataToRender);
+        return res.status(200).send({
+            rightSideData: rightSideData,
+            imageModalData: imageModalData,
+            actachmentModalData: actachmentModalData,
+        });
+    } catch (error) {
+        return res.status(500).send(error);
+    }
 };

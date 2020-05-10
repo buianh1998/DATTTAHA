@@ -6,7 +6,6 @@ let getICETurnServer = () => {
         // let o = {
         //     format: "urls",
         // };
-
         // let bodyString = JSON.stringify(o);
         // let options = {
         //     url: "https://global.xirsys.net/_turn/H-Chat",
