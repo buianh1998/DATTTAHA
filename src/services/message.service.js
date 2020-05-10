@@ -10,7 +10,7 @@ import fsExtra from "fs-extra";
  * get All conversations
  * @param {*} currentUserId
  */
-const LIMIT_CONVERSATIONS_TAKEN = 15;
+const LIMIT_CONVERSATIONS_TAKEN = 3;
 const LIMIT_MESSAGES_TAKEN = 30;
 let getAllConvensationItems = (currentUserId) => {
     return new Promise(async (resolve, reject) => {
@@ -267,9 +267,91 @@ let addNewAttachment = (sender, recieverId, messageVal, isChatGroup) => {
         }
     });
 };
+/**
+ * Read more presonal & groupchat
+ * @param {String} currentUserId
+ * @param {Number} skipPersonal
+ * @param {Number} skipGroup
+ */
+let readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let contacts = await contactModel.readMoreContacts(currentUserId, skipPersonal, LIMIT_CONVERSATIONS_TAKEN);
+            let userConversationPromise = contacts.map(async (contact) => {
+                if (contact.contactId == currentUserId) {
+                    let getUserContact = await userModel.getNormalUserDataById(contact.userId);
+                    getUserContact.updatedAt = contact.updatedAt;
+                    return getUserContact;
+                } else {
+                    let getUserContact = await userModel.getNormalUserDataById(contact.contactId);
+                    getUserContact.updatedAt = contact.updatedAt;
+                    return getUserContact;
+                }
+            });
+            let userConversations = await Promise.all(userConversationPromise);
+
+            let groupConversations = await chatGroupModel.readMoreChatGroups(currentUserId, skipGroup, LIMIT_CONVERSATIONS_TAKEN);
+            //concat gộp 2 mảng thành 1 mảng
+            let allConversations = userConversations.concat(groupConversations);
+            allConversations = _.sortBy(allConversations, (item) => {
+                return -item.updatedAt;
+            });
+            // get messages to apply in csreen chat
+            let allConversationswithMessagesPromise = allConversations.map(async (conversation) => {
+                conversation = conversation.toObject();
+                if (conversation.menbers) {
+                    let getMessage = await messageGroupModel.model.getMessageInGroup(conversation._id, LIMIT_MESSAGES_TAKEN);
+                    conversation.messages = _.reverse(getMessage);
+                } else {
+                    let getMessage = await messageGroupModel.model.getMessageInPersonal(
+                        currentUserId,
+                        conversation._id,
+                        LIMIT_MESSAGES_TAKEN
+                    );
+                    conversation.messages = _.reverse(getMessage);
+                }
+                return conversation;
+            });
+            let allConversationswithMessages = await Promise.all(allConversationswithMessagesPromise);
+            //sort by updateAt desseding
+            allConversationswithMessages = _.sortBy(allConversationswithMessages, (item) => {
+                return -item.updatedAt;
+            });
+
+            resolve(allConversationswithMessages);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+let readMore = (currentUserId, skipMessage, targetid, chatInGroup) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // message in group
+            if (chatInGroup) {
+                let getMessage = await messageGroupModel.model.readMoreMessageInGroup(targetid, skipMessage, LIMIT_MESSAGES_TAKEN);
+                getMessage = _.reverse(getMessage);
+                return resolve(getMessage);
+            }
+            // message in persional
+            let getMessage = await messageGroupModel.model.readMoreMessageInPersonal(
+                currentUserId,
+                targetid,
+                skipMessage,
+                LIMIT_MESSAGES_TAKEN
+            );
+            getMessage = _.reverse(getMessage);
+            return resolve(getMessage);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
 module.exports = {
     getAllConvensationItems: getAllConvensationItems,
     addNewTextImoji: addNewTextImoji,
     addNewImage: addNewImage,
     addNewAttachment: addNewAttachment,
+    readMoreAllChat: readMoreAllChat,
+    readMore: readMore,
 };

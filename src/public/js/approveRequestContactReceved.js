@@ -123,9 +123,11 @@ function approveRequestContactRecieved() {
                             </div>
                         </div>
                         `;
+
                         $("#screen-chat").prepend(rightSideData);
                         //Step 4: call function changeScreenChat
                         changeScreenChat();
+
                         //Step 5: handle imageModal
                         let imageModalData = `
                                                 <div class="modal fade" id="imagesModal_${targetId}" role="dialog">

@@ -71,7 +71,10 @@ let initRouter = (app) => {
     router.post("/message/add-new-text-emoji", auth.checkLoggedIn, messageValid.checkMessageLength, message.addNewTextImoji);
     router.post("/message/add-new-image", auth.checkLoggedIn, message.addNewImage);
     router.post("/message/add-new-attachment", auth.checkLoggedIn, message.addNewAttachment);
+    router.get("/message/read-more-allChat", auth.checkLoggedIn, message.readMoreAllChat);
+    router.get("/message/read-more", auth.checkLoggedIn, message.readMore);
     router.post("/group-chat/add-new", auth.checkLoggedIn, groupChatValid.addNewGroup, groupChat.addNewGroup);
+
     return app.use("/", router);
 };
 module.exports = initRouter;
