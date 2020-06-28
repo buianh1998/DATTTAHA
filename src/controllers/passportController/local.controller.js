@@ -42,10 +42,10 @@ let initPassportLocal = () => {
                         return done(null, false, req.flash("errors", transErr.account_in_notactive));
                     }
 
-                    // let checkPassword = await user.comparePassword(password);
-                    // if (!checkPassword) {
-                    //     return done(null, false, req.flash("errors", transErr.login_failed));
-                    // }
+                    let checkPassword = await user.comparePassword(password);
+                    if (!checkPassword) {
+                        return done(null, false, req.flash("errors", transErr.login_failed));
+                    }
                     return done(null, user);
                 } catch (error) {
                     console.log(error);

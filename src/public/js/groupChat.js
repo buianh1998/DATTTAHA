@@ -59,7 +59,7 @@ function callCreateGroupChat() {
         .unbind("click")
         .on("click", function () {
             let countUsers = $("ul#friends-added").find("li");
-            if (countUsers.length < 2) {
+            if (countUsers.length < 1) {
                 alertify.notify("Vui lòng chọn thêm bạn bè vào nhóm, tối thiểu 2 người", "error", 7);
                 return false;
             }

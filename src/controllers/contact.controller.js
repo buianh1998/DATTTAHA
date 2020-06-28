@@ -2,22 +2,22 @@ import { contact } from "../services/index.service";
 import { validationResult } from "express-validator/check";
 
 module.exports.findUserContact = async (req, res) => {
-    let errorArr = [];
-    //.isEmpty() trả ra trạng thái nhập thành công hay không có 2 trạng thái true or false
-    //.mapped() trả ra lỗi sai mà mình mắc phải ở các trường validation
-    // console.log(validationResult(req).mapped());
-    // console.log("-----------------");
+    // let errorArr = [];
+    // //.isEmpty() trả ra trạng thái nhập thành công hay không có 2 trạng thái true or false
+    // //.mapped() trả ra lỗi sai mà mình mắc phải ở các trường validation
+    // // console.log(validationResult(req).mapped());
+    // // console.log("-----------------");
 
-    let validationError = validationResult(req);
-    if (!validationError.isEmpty()) {
-        let errors = Object.values(validationError.mapped());
-        errors.forEach((item) => {
-            errorArr.push(item.msg);
-        });
-        // Loging
-        // console.log(errorArr);
-        return res.status(500).send(errorArr);
-    }
+    // let validationError = validationResult(req);
+    // if (!validationError.isEmpty()) {
+    //     let errors = Object.values(validationError.mapped());
+    //     errors.forEach((item) => {
+    //         errorArr.push(item.msg);
+    //     });
+    //     // Loging
+    //     // console.log(errorArr);
+    //     return res.status(500).send(errorArr);
+    // }
     try {
         let currentUserId = req.user._id;
         let keyword = req.params.keyword;

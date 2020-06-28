@@ -10,12 +10,16 @@ let findUserContact = (currentUserId, keyword) => {
     return new Promise(async (resolve, reject) => {
         let deprecatedUserIds = [currentUserId];
         let contactsByUser = await contactModel.findAllByUser(currentUserId);
+        console.log(keyword);
+
         contactsByUser.forEach((item) => {
             deprecatedUserIds.push(item.userId);
             deprecatedUserIds.push(item.contactId);
         });
         deprecatedUserIds = _.uniqBy(deprecatedUserIds);
         let users = await userModel.findAllForAddContact(deprecatedUserIds, keyword);
+        console.log(users);
+
         resolve(users);
     });
 };

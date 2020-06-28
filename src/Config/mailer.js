@@ -1,5 +1,5 @@
 import nodemailer from "nodemailer";
-let adminEmail = "theanhbui17121998@gmail.com";
+let adminEmail = "buianh.angular@gmail.com";
 let adminPassword = "0942559724";
 let adminHost = "smtp.gmail.com";
 let adminPort = 587;

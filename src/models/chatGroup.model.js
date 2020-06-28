@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 let ChatGroupSchema = new mongoose.Schema({
     name: String,
-    userAmount: { type: Number, min: 3, max: 3000 },
+    userAmount: { type: Number, min: 2, max: 3000 },
     messageAmount: { type: Number, default: 0 },
     userId: String,
     menbers: [{ userId: String }],

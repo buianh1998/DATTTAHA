@@ -1,11 +1,10 @@
 import express from "express";
 import { auth, home, user, contact, notificaion, message, groupChat } from "../controllers/index.controller";
 import { authValid, userValid, contactValid, messageValid, groupChatValid } from "./../validation/index";
+import passport from "passport";
 import initPassportLocal from "../controllers/passportController/local.controller";
 import initPassportFacebook from "../controllers/passportController/facebook.controller";
 import initPassportGoogle from "../controllers/passportController/google.controller";
-
-import passport from "passport";
 
 //Init all passport
 initPassportLocal(); //login local
@@ -24,13 +23,11 @@ let initRouter = (app) => {
         "/login",
         auth.checkLoggedOut,
         passport.authenticate("local", {
+            successRedirect: "/",
             failureRedirect: "/login-register",
             successFlash: true,
             failureFlash: true,
-        }),
-        function (req, res) {
-            res.redirect("/");
-        }
+        })
     );
     router.get("/auth/facebook", auth.checkLoggedOut, passport.authenticate("facebook", { scope: ["email"] }));
     router.get(

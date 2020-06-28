@@ -3,32 +3,32 @@ import { bufferBase64, lastItemOfArray, convertTimestampToHumanTime } from "./..
 import request from "request";
 let getICETurnServer = () => {
     return new Promise(async (resolve, reject) => {
-        // let o = {
-        //     format: "urls",
-        // };
-        // let bodyString = JSON.stringify(o);
-        // let options = {
-        //     url: "https://global.xirsys.net/_turn/H-Chat",
-        //     // host: "global.xirsys.net",
-        //     // path: "/_turn/H-Chat",
-        //     method: "PUT",
-        //     headers: {
-        //         Authorization: "Basic " + Buffer.from("buitheanh:84ab0412-8dc2-11ea-9fdf-0242ac150002").toString("base64"),
-        //         "Content-Type": "application/json",
-        //         "Content-Length": bodyString.length,
-        //     },
-        // };
-        // //Call a request to get ICE turn server
-        // request(options, (error, response, body) => {
-        //     if (error) {
-        //         log("Error when get Ice error");
-        //         return reject(error);
-        //     }
-        //     let bodyJson = JSON.parse(body);
-        //     console.log(bodyJson);
-        //     resolve(bodyJson.v.iceServers);
-        // });
-        resolve([]);
+        let o = {
+            format: "urls",
+        };
+        let bodyString = JSON.stringify(o);
+        let options = {
+            url: "https://global.xirsys.net/_turn/H-Chat",
+            // host: "global.xirsys.net",
+            // path: "/_turn/H-Chat",
+            method: "PUT",
+            headers: {
+                Authorization: "Basic " + Buffer.from("buitheanh:84ab0412-8dc2-11ea-9fdf-0242ac150002").toString("base64"),
+                "Content-Type": "application/json",
+                "Content-Length": bodyString.length,
+            },
+        };
+        //Call a request to get ICE turn server
+        request(options, (error, response, body) => {
+            if (error) {
+                log("Error when get Ice error");
+                return reject(error);
+            }
+            let bodyJson = JSON.parse(body);
+            console.log(bodyJson);
+            resolve(bodyJson.v.iceServers);
+        });
+        // resolve([]);
     });
 };
 module.exports.getHomeChat = async (req, res, next) => {

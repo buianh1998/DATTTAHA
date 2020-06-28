@@ -5,11 +5,11 @@ const LIMIT_NUMER_TAKEN = 1;
  * Get notifications when f5 page
  * @param {string} currentUserId
  */
-let getNotifycations = currentUserId => {
+let getNotifycations = (currentUserId) => {
     return new Promise(async (resolve, reject) => {
         try {
             let notifications = await notifiCationModel.model.getByUserIdandLimit(currentUserId, LIMIT_NUMER_TAKEN);
-            let getNotifiContents = notifications.map(async notification => {
+            let getNotifiContents = notifications.map(async (notification) => {
                 let sender = await userModel.findbyIdUser(notification.senderId);
                 return notifiCationModel.content.getContent(
                     notification.type,
@@ -30,7 +30,7 @@ let getNotifycations = currentUserId => {
  * Count all notifications unread
  * @param {string} currentUserId
  */
-let countNotifiUnread = currentUserId => {
+let countNotifiUnread = (currentUserId) => {
     return new Promise(async (resolve, reject) => {
         try {
             let countNotifiUnread = await notifiCationModel.model.countNotifiUnread(currentUserId);
@@ -49,7 +49,7 @@ let readMore = (currentUserId, skipNumberNotification) => {
     return new Promise(async (resolve, reject) => {
         try {
             let newNotifiCations = await notifiCationModel.model.readMore(currentUserId, skipNumberNotification, LIMIT_NUMER_TAKEN);
-            let getNotifiContents = newNotifiCations.map(async notification => {
+            let getNotifiContents = newNotifiCations.map(async (notification) => {
                 let sender = await userModel.findbyIdUser(notification.senderId);
                 return notifiCationModel.content.getContent(
                     notification.type,
@@ -82,5 +82,5 @@ module.exports = {
     getNotifycations: getNotifycations,
     countNotifiUnread: countNotifiUnread,
     readMore: readMore,
-    markAllAsRead: markAllAsRead
+    markAllAsRead: markAllAsRead,
 };
